@@ -4,8 +4,14 @@ import subprocess
 from datetime import datetime
 from login import *
 
-os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "_site")
+site_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "_site")
 
+# change to the _site directory (if it exists)
+if not os.path.exists(site_dir):
+    print(f"               FTP: _site folder does not exist, exitting.")
+    quit()
+
+os.chdir(site_dir)
 if not os.path.isdir(".git"):
     subprocess.call(["git", "init"])
     subprocess.call(["git", "remote", "add", "origin", github_repo_origin])

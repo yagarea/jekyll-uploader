@@ -4,5 +4,5 @@ login = "yourlogin"
 password = "supersercetpassword"
 
 #Github
-github_token = ""
-github_repo_origin = ""
+github_token = "sometoken"
+github_repo_origin = "full origin url"
