@@ -1,29 +1,15 @@
 #!/usr/bin/python3
 import os
+import subprocess
 from datetime import datetime
-from getpass import getpass
-
-from github import Github
+from login import *
 
 os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "_site")
 
-# https://stackoverflow.com/questions/38594717/how-do-i-push-new-files-to-github/
-def get_all_generated_files():
-    list_of_all_generated_files = []
-    for root, dirs, files in os.walk(os.getcwd()):
-        for file in files:
-            list_of_all_generated_files.append(os.path.join(root, file))
+if not os.path.isdir(".git"):
+    subprocess.call(["git", "init"])
+    subprocess.call(["git", "remote", "add", "origin", github_repo_origin])
 
-
-def set_repo():
-    pass
-    # if .git directory does not exist
-        # git init
-        # set origin
-
-
-commit_mess = f"upload {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"
-
-# login to github
-# commit everything in cwd
-# force push everything
+subprocess.call(["git", "add", "-A"])
+subprocess.call(["git", "commit", "-m", f"upload {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}"])
+subprocess.call(["git", "push", "-f", f"https://{github_token}@{github_repo_origin.replace('https://','')}"])
